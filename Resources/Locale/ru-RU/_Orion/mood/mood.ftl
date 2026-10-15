@@ -139,7 +139,7 @@ mood-effect-SpaceDrugsBenefit =
 # Плазмочеловек
 # Plasmaman
 mood-effect-PlasmamanIngestPlasma =
-    Моё тело омолодилось от свежей плазмы, текущей по моим венам.
+    Моё тело омолодилось от свежей плазмы, текущей по моим костям.
 
 mood-effect-PlasmamanIngestMilk =
     Я чувствую, как кальций из молока восстанавливает мои кости. Это просто восхитительно!
