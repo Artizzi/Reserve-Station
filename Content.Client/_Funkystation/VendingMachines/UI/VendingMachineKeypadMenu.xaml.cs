@@ -39,7 +39,12 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
     private bool _showingFeedback;
 
     // flavor text
-    private readonly string[] _successPhrases = [ "[ ENJOY ]", "[ THX! ]", "[ YUM! ]", "[ VEND ]" ];
+    private readonly string[] _successPhrases = [
+        "vending-machine-keypad-success1",
+        "vending-machine-keypad-success2",
+        "vending-machine-keypad-success3",
+        "vending-machine-keypad-success4",
+    ];
 
     // nuke C scale
     private readonly int[] _bluesScale = [0, 2, 3, 4, 5, 6, 7, 9, 10];
@@ -321,7 +326,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         if (success)
         {
             BufferLabel.FontColorOverride = Color.Green;
-            BufferLabel.Text = _random.Pick(_successPhrases);
+            BufferLabel.Text = Loc.GetString(_random.Pick(_successPhrases));
             GreenLed.Modulate = _greenOnColor;
             audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/vending_jingle.ogg"), VendingMachineOwner, User, new AudioParams().WithVolume(-4f));
             OnAudioPlayed?.Invoke(VendingMachineKeypadSound.Success, 1f);
@@ -331,7 +336,7 @@ public sealed partial class VendingMachineKeypadMenu : FancyWindow
         else
         {
             BufferLabel.FontColorOverride = Color.Red;
-            BufferLabel.Text = "[ EMPTY ]";
+            BufferLabel.Text = Loc.GetString("vending-machine-keypad-empty");
             RedLed.Modulate = _redOnColor;
             audio.PlayPredicted(new SoundPathSpecifier("/Audio/Machines/buzz-two.ogg"), VendingMachineOwner, User, new AudioParams().WithVolume(-4f));
             OnAudioPlayed?.Invoke(VendingMachineKeypadSound.Error, 1f);

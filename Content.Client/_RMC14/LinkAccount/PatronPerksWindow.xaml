@@ -7,7 +7,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
     xmlns:controls="clr-namespace:Content.Client._RMC14.LinkAccount"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
     Title="{Loc 'rmc-ui-patron-perks'}"
-    MinSize="625 475">
+    MinSize="700 475"> <!-- Reserve edit: Maecenas System -->
     <TabContainer Name="Tabs" Access="Public">
         <!-- Reserve edit start: Maecenas System -->
         <BoxContainer Name="MainTab" Access="Public" Orientation="Vertical" Margin="5">
