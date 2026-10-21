@@ -324,7 +324,7 @@
           type: [ Yowie ]
           inverted: true
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectSeeingRainbow
+        effectProto: StatusEffectSeeingRainbow # Reserve edit: Fix overlay narcotics
         type: Add
         time: 20
       - !type:ModifyParalysis

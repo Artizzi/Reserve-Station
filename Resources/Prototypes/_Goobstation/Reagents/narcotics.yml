@@ -102,7 +102,7 @@
         probability: 0.05
         time: 4
       - !type:ModifyStatusEffect # tripping balls, duh
-        effectProto: StatusEffectSeeingRainbow
+        effectProto: StatusEffectSeeingRainbow # Reserve edit: Fix overlay narcotics
         type: Add
         time: 20
       - !type:Drunk
@@ -426,12 +426,12 @@
         - !type:MetabolizerTypeCondition # Goobstation - Yowie
           type: [ Yowie ]
           inverted: true
-      - !type:ModifyStatusEffect # tripping balls
+      - !type:ModifyStatusEffect # tripping balls # Reserve edit: Fix overlay narcotics
         conditions:
         - !type:ReagentCondition
           reagent: Heroin
           min: 10.5
-        effectProto: StatusEffectSeeingRainbow
+        effectProto: StatusEffectSeeingRainbow # Reserve edit: Fix overlay narcotics
         type: Add
         time: 20
       - !type:Drunk
