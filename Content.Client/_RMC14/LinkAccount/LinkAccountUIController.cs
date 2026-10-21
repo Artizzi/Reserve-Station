@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq; // Goob - ghost cosmetics
+using Content.Client.Lobby;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Goobstation.Common.CCVar;
@@ -9,6 +10,7 @@ using Content.Goobstation.Shared.Patrons; // Goob - ooc icon selection
 using Content.Goobstation.Shared.GhostCosmetics; // Goob - ghost cosmetics
 using Content.Shared._RMC14.GhostColor; // Goob - ghost cosmetics
 using Content.Shared._RMC14.LinkAccount;
+using Content.Shared._White.CustomGhostSystem;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
@@ -31,6 +33,7 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
     [Dependency] private readonly IEntityManager _entityManager = default!; // Goob - ghost cosmetics
     [Dependency] private readonly IEntityNetworkManager _entityNet = default!; // Goob - ghost cosmetics
     [Dependency] private readonly LinkAccountManager _linkAccount = default!;
+    [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!; // Goob - ghost cosmetics
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -142,24 +145,65 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             // Reserve edit start: Maecenas System
             SetTabTitle(_patronPerksWindow.MainTab, Loc.GetString("rmc-ui-lobby-main"));
             SetTabVisible(_patronPerksWindow.MainTab, tier is not null);
-            var tierName = "";
+            var tierName = string.Join(", ", _linkAccount.Tiers.Select(currentTier => currentTier.Tier));
+            var tiersWithIconSelection = new[] {  // No easy way to check how many icons are in a tier, so we list them manually
+                "Maecenas2",
+                "Maecenas3",
+                "Maecenas4",
+                "Maecenas5",
+                "MaecenasX",
+                "Staff",
+            };
+            var maxTier = "MaecenasX";
             if (tier != null)
             {
-                tierName = tier.Tier;
+                if (string.IsNullOrEmpty(tierName))
+                    tierName = tier.Tier;
+
                 var mainDescription = Loc.GetString("rmc-ui-lobby-main-description", ("tier", tierName));
+                var lockedPerksDescription = "";
+
+                if (tier.OocIcons && tiersWithIconSelection.Contains(tier.Id))
+                    mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ooc-icons");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ooc-icons");
                 if (tier.ShowOnCredits)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-credits");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-credits");
                 if (tier.LobbyMessage)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-lobby-message");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-lobby-message");
                 if (tier.RoundEndShoutout)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-shoutout");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-shoutout");
                 if (tier.GhostColor)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-color");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-color");
                 if (tier.GhostCosmetics)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-cosmetics");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-cosmetics");
                 if (tier.GhostParticles)
                     mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-particles");
-                _patronPerksWindow.MainTabLabel.SetMarkupPermissive(mainDescription);
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-particles");
+                if (tier.GhostCosmetics)
+                    mainDescription = mainDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-sprite-export");
+                else
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-sprite-export");
+
+                if (!string.IsNullOrEmpty(lockedPerksDescription) && tiersWithIconSelection.Contains(tier.Id) && tier.Id != maxTier)
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ooc-icons-more");
+                if (!string.IsNullOrEmpty(lockedPerksDescription) && tier.GhostCosmetics && tier.Id != maxTier)
+                    lockedPerksDescription = lockedPerksDescription + "\n" + Loc.GetString("rmc-ui-lobby-main-ghost-cosmetics-more");
+
+                if (!string.IsNullOrEmpty(lockedPerksDescription))
+                    lockedPerksDescription = "\n" + Loc.GetString("rmc-ui-lobby-main-locked-perks") + lockedPerksDescription;
+                _patronPerksWindow.MainTabLabel.SetMarkupPermissive(mainDescription + lockedPerksDescription);
             }
             // Reserve edit end: Maecenas System
 
@@ -225,7 +269,7 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
             SetTabTitle(_patronPerksWindow.OocIconTab, Loc.GetString("goob-ui-ooc-icon"));
             SetTabVisible(_patronPerksWindow.OocIconTab, tier is { OocIcons: true });
             if (tier is { OocIcons: true })
-                PopulateOocIcons(tier);
+                PopulateOocIcons();  // Reserve edit: Maecenas System
             // Goob end
 
             UpdateExamples();
@@ -365,7 +409,9 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
 
         if (_patronPerksWindow != null && _linkAccount.Tier is { GhostCosmetics: true } or { GhostParticles: true } or { GhostColor: true })
         {
-            _cosmeticsPreviewGhost = _entityManager.SpawnEntity("GhostCosmeticsPreviewDummy", MapCoordinates.Nullspace);
+            var ghostProtoId = _preferencesManager.Preferences?.CustomGhost ?? new ProtoId<CustomGhostPrototype>("default");
+            var ghostPrototype = _prototype.Index<CustomGhostPrototype>(ghostProtoId);
+            _cosmeticsPreviewGhost = _entityManager.Spawn(ghostPrototype.GhostEntityPrototype, MapCoordinates.Nullspace);
             if (_entityManager.TryGetComponent(_cosmeticsPreviewGhost.Value, out GhostColorComponent? previewColor))
                 previewColor.Color = _linkAccount.GhostColor;
 
@@ -401,9 +447,11 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
         );
     }
 
-    private void PopulateOocIcons(SharedRMCPatronTier tier)
+    private void PopulateOocIcons()  // Reserve edit: Maecenas System
     {
-        if (_patronPerksWindow == null || !_prototype.TryIndex(tier.Id, out var tierProto))
+        if (_patronPerksWindow == null ||
+            _linkAccount.Tier is not { } tier ||  // Reserve edit: Maecenas System
+            !_prototype.TryIndex(tier.Id, out var tierProto))
             return;
 
         var window = _patronPerksWindow;
@@ -412,9 +460,26 @@ public sealed class LinkAccountUIController : UIController, IOnSystemChanged<Lin
         _selectedOocIcon = _linkAccount.OocIcon;
 
         var group = new ButtonGroup();
-        var icons = _prototype.GetAvailableOocIcons(tierProto).ToList();
+        // Reserve edit start: Maecenas System
+        var allowedIconTiers = new List<ProtoId<PatronTierPrototype>>();
+        foreach (var currentTier in _linkAccount.Tiers)
+        {
+            if (!_prototype.TryIndex(currentTier.Id, out var currentTierProto))
+                continue;
 
-        foreach (var iconTier in tierProto.OocIconTiers)
+            foreach (var iconTier in currentTierProto.OocIconTiers)
+            {
+                if (!allowedIconTiers.Contains(iconTier))
+                    allowedIconTiers.Add(iconTier);
+            }
+        }
+
+        var icons = _prototype.EnumeratePrototypes<OocIconPrototype>()
+            .Where(icon => allowedIconTiers.Contains(icon.Tier))
+            .ToList();
+        // Reserve edit end: Maecenas System
+
+        foreach (var iconTier in allowedIconTiers)  // Reserve edit: Maecenas System
         {
             var tierIcons = icons
                 .Where(icon => icon.Tier == iconTier)
