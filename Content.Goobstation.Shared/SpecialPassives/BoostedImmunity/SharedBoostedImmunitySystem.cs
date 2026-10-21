@@ -32,6 +32,7 @@ public abstract partial class SharedBoostedImmunitySystem : EntitySystem
     [Dependency] private SharedBloodstreamSystem _bloodSys = default!;
     [Dependency] private SharedDrunkSystem _drunkSys = default!;
     [Dependency] private StatusEffectsSystem _status = default!;
+    [Dependency] private Content.Shared.StatusEffectNew.StatusEffectsSystem _statusNew = default!; // Reserve edit: rainbow status effect migration
 
     private EntityQuery<DamageableComponent> _damageableQuery;
     private EntityQuery<MobStateComponent> _mobStateQuery;
@@ -181,7 +182,7 @@ public abstract partial class SharedBoostedImmunitySystem : EntitySystem
     private void SoberEntity(Entity<BoostedImmunityComponent> ent, StatusEffectsComponent status)
     {
         _drunkSys.TryRemoveDrunkenness(ent);
-        _status.TryRemoveStatusEffect(ent, "SeeingRainbows", status);
+        _statusNew.TryRemoveStatusEffect(ent, "StatusEffectSeeingRainbow"); // Reserve edit: rainbow status effect migration
     }
 
     private void RemovePacifism(Entity<BoostedImmunityComponent> ent, StatusEffectsComponent status)

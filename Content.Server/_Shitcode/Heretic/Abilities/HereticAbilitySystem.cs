@@ -82,6 +82,7 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     // [Dependency] private readonly PhysicsSystem _phys = default!; // Reserve edit: Fix warnings
     [Dependency] private readonly SharedStunSystem _stun = default!;
+    [Dependency] private readonly Content.Shared.StatusEffectNew.StatusEffectsSystem _statusNew = default!; // Reserve edit: rainbow status effect migration
     [Dependency] private readonly ThrowingSystem _throw = default!;
     [Dependency] private readonly SharedUserInterfaceSystem _ui = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -554,7 +555,7 @@ public sealed partial class HereticAbilitySystem : SharedHereticAbilitySystem
                 _statusEffect.TryRemoveStatusEffect(uid, "SlowedDown", status);
                 _statusEffect.TryRemoveStatusEffect(uid, "BlurryVision", status);
                 _statusEffect.TryRemoveStatusEffect(uid, "TemporaryBlindness", status);
-                _statusEffect.TryRemoveStatusEffect(uid, "SeeingRainbows", status);
+                _statusNew.TryRemoveStatusEffect(uid, "StatusEffectSeeingRainbow"); // Reserve edit: rainbow status effect migration
             }
         }
     }
