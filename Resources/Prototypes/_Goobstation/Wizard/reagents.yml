@@ -92,8 +92,8 @@
           - type: Wizard
           - type: Apprentice
           guidebookComponentName: reagent-comp-condition-wizard-or-apprentice
-      - !type:GenericStatusEffect
-        key: SeeingRainbows
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSeeingRainbow # Reserve edit: Fix overlay narcotics
         time: 100.0
         type: Remove
         conditions:
