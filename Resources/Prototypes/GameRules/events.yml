@@ -54,6 +54,7 @@
     - id: NinjaSpawn
     - id: ParadoxCloneSpawn
     #- id: RevenantSpawn  # GoobStation - removed till rework
+    - id: RevenantMidround # Reserve edit: Revenant, replaces the disabled RevenantSpawn
     - id: SleeperAgents
     - id: ZombieOutbreak
     - id: LoneOpsSpawn
