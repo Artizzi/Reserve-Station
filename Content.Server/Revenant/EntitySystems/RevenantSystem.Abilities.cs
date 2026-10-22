@@ -509,10 +509,37 @@ public sealed partial class RevenantSystem
         if (args.Handled)
             return;
 
+        // Reserve edit start - animate every item around the revenant instead of a single target
+        var coords = _transformSystem.GetMapCoordinates(uid);
+        var items = new List<(EntityUid Uid, float Dist)>();
+        foreach (var item in _lookup.GetEntitiesInRange<ItemComponent>(coords, comp.AnimateRadius))
+        {
+            if (!_revenantAnimated.CanAnimateObject(item))
+                continue;
+
+            var dist = (_transformSystem.GetMapCoordinates(item).Position - coords.Position).LengthSquared();
+            items.Add((item, dist));
+        }
+
+        if (items.Count == 0)
+        {
+            _popup.PopupEntity(Loc.GetString("revenant-animate-no-items"), uid, uid);
+            return;
+        }
+
+        // Only charge essence and start the cooldown when something will actually be animated
+        if (!TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs))
+            return;
+
+        args.Handled = true;
         PlayHauntSound(uid, comp); //Reserve edit
 
-        if (_revenantAnimated.CanAnimateObject(args.Target) && TryUseAbility(uid, comp, comp.AnimateCost, comp.AnimateDebuffs))
-            _revenantAnimated.TryAnimateObject(args.Target, comp.AnimateTime, (uid, comp));
+        items.Sort((a, b) => a.Dist.CompareTo(b.Dist));
+        for (var i = 0; i < Math.Min(items.Count, comp.AnimateMaxItems); i++)
+        {
+            _revenantAnimated.TryAnimateObject(items[i].Uid, comp.AnimateTime, (uid, comp));
+        }
+        // Reserve edit end
     }
     // End Imp Changes
 }

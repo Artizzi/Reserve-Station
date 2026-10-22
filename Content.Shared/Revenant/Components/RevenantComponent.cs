@@ -264,6 +264,20 @@ public sealed partial class RevenantComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField]
     public FixedPoint2 AnimateCost = 50;
 
+    // Reserve edit start
+    /// <summary>
+    /// Items within this many tiles of the revenant get animated.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float AnimateRadius = 3f;
+
+    /// <summary>
+    /// The most items animated at once. The closest ones are picked first.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public int AnimateMaxItems = 6;
+    // Reserve edit end
+
     /// <summary>
     /// How long an item should be animated for
     /// </summary>
