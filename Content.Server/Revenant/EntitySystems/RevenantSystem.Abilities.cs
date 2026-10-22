@@ -441,6 +441,20 @@ public sealed partial class RevenantSystem
             var comp = EnsureComp<RevenantOverloadedLightsComponent>(allLight.First());
             comp.Target = ent; //who they gon fire at?
         }
+
+        // Reserve edit start - lights react even with nobody around: they flicker and some burst
+        foreach (var light in _lookup.GetEntitiesInRange<PoweredLightComponent>(xform.Coordinates, component.OverloadRadius))
+        {
+            // Lights about to zap someone have to stay intact
+            if (HasComp<RevenantOverloadedLightsComponent>(light))
+                continue;
+
+            if (_random.Prob(component.OverloadBreakChance))
+                _poweredLight.TryDestroyBulb(light, light.Comp);
+            else
+                _ghost.DoGhostBooEvent(light);
+        }
+        // Reserve edit end
     }
 
     private void OnBlightAction(EntityUid uid, RevenantComponent component, RevenantBlightActionEvent args)

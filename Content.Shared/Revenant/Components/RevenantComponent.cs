@@ -191,6 +191,12 @@ public sealed partial class RevenantComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("overloadZapRadius")]
     public float OverloadZapRadius = 2f;
+
+    /// <summary>
+    /// Reserve edit - chance for each light in the overload radius to burst. The rest only flicker.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float OverloadBreakChance = 0.25f;
     #endregion
 
     #region Blight Ability
