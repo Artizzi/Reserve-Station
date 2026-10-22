@@ -72,6 +72,11 @@ public sealed partial class RevenantBloodWritingEvent : InstantActionEvent // Be
 {
 }
 
+// Reserve edit
+public sealed partial class RevenantChillActionEvent : InstantActionEvent
+{
+}
+
 public sealed partial class RevenantAnimateEvent : InstantActionEvent // Reserve edit - animates every item around the revenant
 {
 }

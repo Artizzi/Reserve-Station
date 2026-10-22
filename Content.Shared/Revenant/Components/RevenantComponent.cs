@@ -257,6 +257,56 @@ public sealed partial class RevenantComponent : Component
     #endregion
 
     // Begin Imp Changes
+    // Reserve edit start
+    #region Chill Ability
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public FixedPoint2 ChillCost = 30;
+
+    /// <summary>
+    /// Stun time and corporeal time after using the ability, same as the other abilities.
+    /// </summary>
+    [DataField]
+    public Vector2 ChillDebuffs = new(2, 6);
+
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillRadius = 4f;
+
+    /// <summary>
+    /// How many kelvin the air on each tile loses.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillAirTemperatureDrop = 40f;
+
+    /// <summary>
+    /// The air won't be cooled below this. -30 °C by default.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillAirMinTemperature = 243.15f;
+
+    /// <summary>
+    /// How many kelvin living beings lose.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillBodyTemperatureDrop = 25f;
+
+    /// <summary>
+    /// Bodies won't be cooled below this. Humans slow down below 293 K and take cold damage below 260 K,
+    /// so the default slows them without hurting them.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillBodyMinTemperature = 275f;
+
+    /// <summary>
+    /// Chance for frost to appear on each floor tile in range.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField]
+    public float ChillFrostChance = 0.6f;
+
+    [DataField]
+    public EntProtoId ChillFrostPrototype = "RevenantFrost";
+    #endregion
+    // Reserve edit end
+
     #region Blood Writing
     [ViewVariables(VVAccess.ReadWrite), DataField("bloodWritingCost")]
     public FixedPoint2 BloodWritingCost = 2;
