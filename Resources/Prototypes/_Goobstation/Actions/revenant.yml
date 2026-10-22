@@ -6,6 +6,11 @@
   parent: BaseAction # reserve edit
   description: Gives essence and stolen essence for every witness.
   components:
+  - type: Action # reserve edit
+    itemIconStyle: NoItem
+    icon:
+      sprite: _Goobstation/Actions/actions_revenant.rsi
+      state: transmit
   - type: InstantAction
     event: !type:RevenantHauntActionEvent
 
@@ -15,6 +20,9 @@
   parent: BaseAction # reserve edit
   description: Costs 2 Essence per glyph.
   components:
+  - type: Action # reserve edit
+    itemIconStyle: NoItem
+    icon: Interface/Actions/blood-writing.png
   - type: InstantAction
     event: !type:RevenantBloodWritingEvent
 
