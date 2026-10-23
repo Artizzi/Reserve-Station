@@ -12,7 +12,7 @@
   <GuideEntityEmbed Entity="Gyroscope"/>
   <GuideEntityEmbed Entity="ComputerShuttle"/>
   <GuideEntityEmbed Entity="SubstationBasic"/>
-  <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="P.A.C.M.A.N." />
+  <GuideEntityEmbed Entity="PortableGeneratorPacman" Caption="П.А.К.М.А.Н." />
   </Box>
   <Box>
   <GuideEntityEmbed Entity="CableHVStack"/>
@@ -100,12 +100,12 @@
   ## Питание
   Когда все системы на месте, их нужно запитать.
 
-  Для небольших шаттлов хорошо подходит портативный генератор типа J.R.P.A.C.M.A.N. Он выдаёт сразу НВ-энергию, так что о трансформаторах можно не беспокоиться.
+  Для небольших шаттлов хорошо подходит портативный генератор М.И.Н.И.П.А.К.М.А.Н. Он выдаёт сразу НВ-энергию, так что о трансформаторах можно не беспокоиться.
   Топливо для генератора тоже часто встречается в техтуннелях.
 
   <Box HorizontalAlignment="Stretch">
     <Box>
-      <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="J.R.P.A.C.M.A.N."/>
+      <GuideEntityEmbed Entity="PortableGeneratorJrPacman" Caption="М.И.Н.И.П.А.К.М.А.Н."/>
     </Box>
     <Box>
       <GuideEntityEmbed Entity="WeldingFuelTankFull"/>

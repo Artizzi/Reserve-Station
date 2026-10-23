@@ -106,7 +106,7 @@
 </Box>
 
 <Box>
-  <Box Orientation="Vertical">
+  <Box>
     <Box>
       [tex path="_Goobstation/Actions/slashericons.rsi" state="Incorporealize" scale="2"/]
     </Box>
