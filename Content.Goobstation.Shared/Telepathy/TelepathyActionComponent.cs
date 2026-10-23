@@ -40,4 +40,17 @@ public sealed partial class TelepathyActionComponent : Component
     /// </summary>
     [DataField]
     public LocId? PopupWhisperFlavor;
+
+    /// <summary>
+    /// Reserve edit - if set, the flavor text and the message are sent as one line into the target's chat
+    /// in this color, instead of a separate flavor line and a popup.
+    /// </summary>
+    [DataField]
+    public Color? MessageColor;
+
+    /// <summary>
+    /// Reserve edit - font size of the colored message. Regular chat text is about 12.
+    /// </summary>
+    [DataField]
+    public int MessageFontSize = 12;
 };

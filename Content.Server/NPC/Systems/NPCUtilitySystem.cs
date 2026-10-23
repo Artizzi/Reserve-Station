@@ -6,6 +6,10 @@ using Content.Server.NPC.Queries.Curves;
 using Content.Server.NPC.Queries.Queries;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Cuffs; // Reserve edit
+using Content.Shared.Cuffs.Components; // Reserve edit
+using Content.Shared.Cuffs; // Reserve edit
+using Content.Shared.Cuffs.Components; // Reserve edit
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Inventory;
@@ -71,6 +75,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ExamineSystemShared _examine = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly MobThresholdSystem _thresholdSystem = default!;
+    [Dependency] private readonly SharedCuffableSystem _cuffableSystem = default!; // Reserve edit
     [Dependency] private readonly TurretTargetSettingsSystem _turretTargetSettings = default!;
     [Dependency] private readonly SharedWieldableSystem _wieldable = default!; // Goobstation start
     [Dependency] private readonly SharedBodySystem _body = default!;
@@ -447,6 +452,15 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return temperature.CurrentTemperature <= con.MinTemp ? 1f : 0f;
             }
+            // Reserve edit start - restored after upstream merge, used by revenant-animated handcuffs
+            case TargetIsCuffableCon:
+            {
+                if (!TryComp<CuffableComponent>(targetUid, out var cuffable))
+                    return 0f;
+
+                return _cuffableSystem.IsCuffed((targetUid, cuffable), true) ? 0f : 1f;
+            }
+            // Reserve edit end
             default:
                 throw new NotImplementedException();
         }

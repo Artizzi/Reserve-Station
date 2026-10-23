@@ -214,6 +214,8 @@
             - WeakToSalt
           statusEffect: Corporeal
           duration: 15  # 古布站 - Wraith End
+        - type: RevealRevenantOnCollide # Reserve edit - restored after upstream merge, salt puddles reveal revenants
+          popupText: revenant-revealed-salt
 
 
 - type: reagent
