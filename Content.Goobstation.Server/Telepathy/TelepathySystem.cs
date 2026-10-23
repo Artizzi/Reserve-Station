@@ -44,9 +44,27 @@ public sealed partial class TelepathySystem : SharedTelepathySystem
 
         _quickDialog.OpenDialog(actor.PlayerSession, Loc.GetString(telepathy.DialogueTitle), "Message", (string message) =>
         {
+            // Reserve edit start - colored whisper: flavor and message on one line in the target's chat, no popup.
+            // Popups can be mirrored into chat, which would show the message a second time in red.
+            if (telepathy.MessageColor is { } color)
+            {
+                var text = FormattedMessage.EscapeText(message);
+                if (telepathy.PopupWhisperFlavor is not null)
+                    text = $"{Loc.GetString(telepathy.PopupWhisperFlavor)} {text}";
+
+                _chatManager.ChatMessageToOne(
+                    ChatChannel.Local,
+                    message,
+                    $"[font size={telepathy.MessageFontSize}][color={color.ToHex()}][italic]{text}[/italic][/color][/font]",
+                    EntityUid.Invalid,
+                    false,
+                    actorTarget.PlayerSession.Channel
+                );
+            }
+            // Reserve edit end
             // Suddenly, a voice resonates in your head...
             // blah blah
-            if (telepathy.PopupWhisperFlavor is not null)
+            else if (telepathy.PopupWhisperFlavor is not null)
                 _chatManager.ChatMessageToOne(
                     ChatChannel.Local,
                     "",
@@ -55,7 +73,8 @@ public sealed partial class TelepathySystem : SharedTelepathySystem
                     false,
                     actorTarget.PlayerSession.Channel
                 );
-            _popup.PopupEntity(message, target, target, telepathy.PopupType);
+            if (telepathy.MessageColor is null) // Reserve edit
+                _popup.PopupEntity(message, target, target, telepathy.PopupType);
 
             // You whisper to
             _popup.PopupEntity(Loc.GetString(telepathy.PopupWhisperSelf,
