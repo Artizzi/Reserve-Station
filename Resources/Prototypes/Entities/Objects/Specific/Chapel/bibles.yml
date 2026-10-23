@@ -115,6 +115,8 @@
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: RevealRevenantOnCollide # Reserve edit - restored after upstream merge, a thrown bible reveals revenants
+  - type: CollisionWake  # Reserve edit: Revenant fix
+    enabled: false
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:
