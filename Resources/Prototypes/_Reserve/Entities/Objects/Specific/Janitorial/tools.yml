@@ -29,6 +29,17 @@
   - type: StaticPrice  # Upstream 2706 fix
     price: 100
 
+- type: entity
+  parent: Bucket
+  id: PumpkinBucket
+  name: pumpkin bucket
+  description: A bucket shaped like a carved pumpkin. Spooky and still good for mopping.
+  components:
+  - type: Sprite
+    sprite: &pumpkin_bucket_sprite _Reserve/Objects/Specific/Janitorial/pumpkin_bucket.rsi
+  - type: Clothing
+    sprite: *pumpkin_bucket_sprite
+
 # endregion
 
 # region Trash Bags
