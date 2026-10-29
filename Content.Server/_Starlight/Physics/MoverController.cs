@@ -159,7 +159,10 @@ public sealed class SLMoverController : SharedMoverController
         // run concurrently with that target. Everything else вЂ” including ordinary players вЂ” is pure
         // value computation in the parallel pass (writes are applied on the main thread during scatter),
         // so it no longer needs to be spun serially.
-        if (prioritized || RelayQuery.HasComp(source.Owner))
+        // Reserve edit - тайловое движение ("Внутренний покой") живёт только в общем HandleMobMovement и пишет
+        // в компоненты/трансформ, поэтому гоняем его последовательно. Иначе сервер двигает по пикселям,
+        // клиент предсказывает по тайлам, и персонажа дёргает.
+        if (prioritized || RelayQuery.HasComp(source.Owner) || TileMovementQuery.HasComp(source.Owner))
             _prioritizedMovers.Add(source);
         else
             _movers.Add(source);
