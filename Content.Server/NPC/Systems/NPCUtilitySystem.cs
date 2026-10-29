@@ -52,6 +52,10 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Shared.EntityEffects.Effects.Damage; // Goobstation end
+using Content.Server._Reserve.NPC; // Reserve edit
+using Content.Server.NPC.HTN; // Reserve edit
+using Content.Shared.NPC; // Reserve edit
+using Robust.Shared.Timing; // Reserve edit
 
 namespace Content.Server.NPC.Systems;
 
@@ -81,6 +85,7 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly MetabolizerSystem _metabolizer = default!;
     // Goobstation end
+    [Dependency] private readonly IGameTiming _timing = default!; // Reserve edit
 
     private EntityQuery<PuddleComponent> _puddleQuery;
     private EntityQuery<TransformComponent> _xformQuery;
@@ -266,6 +271,56 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return 1f;
             }
+            // Reserve edit start
+            case TargetNotUnreachableCon:
+            {
+                if (TryComp<NPCUnreachableTargetsComponent>(owner, out var unreachable) &&
+                    unreachable.Targets.TryGetValue(targetUid, out var until) &&
+                    until > _timing.CurTime)
+                {
+                    return 0f;
+                }
+
+                return 1f;
+            }
+            case TargetNotClaimedCon:
+            {
+                if (!_xformQuery.TryGetComponent(targetUid, out var targetXform) ||
+                    !_xformQuery.TryGetComponent(owner, out var ownerXform))
+                {
+                    return 1f;
+                }
+
+                var targetPos = _transform.GetMapCoordinates(targetUid, targetXform);
+                var ownerPos = _transform.GetMapCoordinates(owner, ownerXform);
+
+                if (targetPos.MapId != ownerPos.MapId)
+                    return 1f;
+
+                var ourDistance = (targetPos.Position - ownerPos.Position).LengthSquared();
+                var npcQuery = EntityQueryEnumerator<ActiveNPCComponent, HTNComponent, TransformComponent>();
+
+                while (npcQuery.MoveNext(out var otherUid, out _, out var htn, out var otherXform))
+                {
+                    if (otherUid == owner ||
+                        !htn.Blackboard.TryGetValue<EntityUid>("Target", out var otherTarget, EntityManager) ||
+                        otherTarget != targetUid)
+                    {
+                        continue;
+                    }
+
+                    var otherPos = _transform.GetMapCoordinates(otherUid, otherXform);
+
+                    if (otherPos.MapId == targetPos.MapId &&
+                        (targetPos.Position - otherPos.Position).LengthSquared() < ourDistance)
+                    {
+                        return 0f;
+                    }
+                }
+
+                return 1f;
+            }
+            // Reserve edit end
             case TargetAccessibleCon:
             {
                 if (_container.TryGetContainingContainer(targetUid, out var container))

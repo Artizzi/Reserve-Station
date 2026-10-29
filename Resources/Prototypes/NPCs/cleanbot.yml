@@ -3,9 +3,14 @@
 - type: htnCompound
   id: CleanbotCompound
   branches:
+    # Reserve edit start - улучшенный поиск луж
     - tasks:
         - !type:HTNCompoundTask
-          task: BufferNearbyPuddlesCompound
+          task: CleanbotBufferPuddlesCompound
+    - tasks:
+        - !type:HTNCompoundTask
+          task: CleanbotForgetUnreachablePuddleCompound
+    # Reserve edit end
     - tasks:
         - !type:HTNCompoundTask
           task: IdleCompound
