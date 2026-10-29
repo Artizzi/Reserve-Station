@@ -14,3 +14,5 @@ surgery-error-self-surgery = Вы не можете сделать операц�
 surgery-part-damage-evaded = { $user } уклоняется!
 surgery-ui-window-title-with-part = Хирургия - { $part }
 surgery-ui-window-title-with-part-surgery = Хирургия - { $part }, { $surgery }
+
+surgery-ui-window-steps-error-missing-tool = Для этого шага нужен инструмент: { $tool }!

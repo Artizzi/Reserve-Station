@@ -46,3 +46,5 @@ ghosts-summoned-message = Призраки были призваны!
 global-tile-movement-message = Начинает звучать зловещий ритм!
 
 spell-rathen-gut-popup = У вас нет аппендикса, но чем-то всё же пришлось пожертвовать!
+
+ice-cube-melt = Лёд тает!

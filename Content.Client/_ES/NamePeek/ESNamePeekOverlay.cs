@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Goobstation.Common.CCVar;  // Reserve edit: Make RuneChat optional for Alt-overlay
+using Content.Goobstation.Shared.Blob.Components; // Reserve edit
 using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs;
@@ -109,7 +110,12 @@ public sealed class ESNamePeekOverlay : Overlay
             if (!_entityManager.TryGetComponent<TransformComponent>(ent, out var xform)
                 || !_entityManager.TryGetComponent<SpriteComponent>(ent, out var sprite)
                 || !sprite.Visible
+                || sprite.ContainerOccluded // Reserve edit: hidden mobs, e.g. floor goblins under tiles
                 || sprite.Color.A <= 0f)
+                continue;
+
+            // Reserve edit: blob tiles get a MobState, but they are not creatures
+            if (_entityManager.HasComponent<BlobTileComponent>(ent))
                 continue;
 
             var mapPos = _transform.GetMapCoordinates((ent, xform));
@@ -119,7 +125,8 @@ public sealed class ESNamePeekOverlay : Overlay
                 && lightLevel <= MinLightLevel)
                 continue;
 
-            if (eye.DrawFov && !_examine.InRangeUnOccluded(playerEnt, ent))
+            // Reserve edit: same rules as regular examine - respects blindness/sleep, stealth and walls
+            if (!_examine.CanExamine(playerEnt, ent))
                 continue;
 
             var text = Identity.Name(ent, _entityManager, playerEnt);
