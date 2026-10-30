@@ -1623,6 +1623,7 @@
   loadouts:
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
+  - ChiefMedicalOfficerLabCoatWinter # Funky Station
 
 - type: loadoutGroup
   id: ChiefMedicalOfficerNeck
