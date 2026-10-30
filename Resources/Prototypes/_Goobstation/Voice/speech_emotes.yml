@@ -98,6 +98,51 @@
 #     - ultra farting
 
 - type: emote
+  id: Fart
+  name: chat-emote-name-flap
+  category: Farts
+  icon: Interface/Emotes/chitter.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+    - Silicon
+  chatMessages: []
+  chatTriggers: []
+
+- type: emote
+  id: FartSuper
+  name: chat-emote-name-flap
+  category: Farts
+  icon: Interface/Emotes/chitter.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+    - Silicon
+  chatMessages: []
+  chatTriggers: []
+
+- type: emote
+  id: FartInhale
+  name: chat-emote-name-flap
+  category: Farts
+  icon: Interface/Emotes/chitter.png
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+    - Silicon
+  chatMessages: []
+  chatTriggers: []
+
+- type: emote
   id: Flap
   name: chat-emote-name-flap
   category: Vocal
