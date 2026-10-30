@@ -7,7 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Lobby.UI;
 
 [GenerateTypedNameReferences]
-public sealed partial class CharacterSetupGuiSavePanel : BaseWindow // Goob
+public sealed partial class CharacterSetupGuiSavePanel : DefaultWindow
 {
     public CharacterSetupGuiSavePanel()
     {
@@ -18,5 +18,6 @@ public sealed partial class CharacterSetupGuiSavePanel : BaseWindow // Goob
             Close();
         };
 
+        CloseButton.Visible = false;
     }
 }

@@ -4,7 +4,6 @@ using Content.Goobstation.Server.VoiceChat;
 using Content.Goobstation.Common.JoinQueue;
 using Content.Goobstation.Common.ServerCurrency;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Server.Entry;
@@ -23,8 +22,6 @@ public sealed class EntryPoint : GameServer
         ServerGoobContentIoC.Register();
 
         IoCManager.BuildGraph();
-
-        IoCManager.Resolve<IPrototypeManager>().RegisterIgnore("newsEntry");
 
         _voiceManager = IoCManager.Resolve<VoiceChatManager>();
         _voiceManager.Initialize();
