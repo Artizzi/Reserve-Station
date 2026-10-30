@@ -105,6 +105,7 @@ namespace Content.Shared.Body.Systems
                     if (reagent.Quantity > tracked)
                         stomach.ReagentDeltas.Add(new StomachComponent.ReagentDelta(new(reagent.Reagent, reagent.Quantity - tracked)));
                 }
+                // Reserve end
 
                 _solutionContainerSystem.UpdateChemicals(stomach.Solution.Value);
 
