@@ -26758,3 +26758,105 @@ Entries:
       message: carry client reload/crash bug
   id: 3005
   time: '2026-10-26T16:45:58.0000000+00:00'
+- author: Durk
+  changes:
+    - type: Add
+      message: Added new LOBBY UI!!!!!
+  id: 3006
+  time: '2026-10-27T22:15:19.0000000+00:00'
+- author: Beanyboi69
+  changes:
+    - type: Add
+      message: >-
+        Halloween is here! Get costumes inspired by your favorites at your local
+        autodrobe! Remember to check the contraband storage.
+    - type: Add
+      message: Candy can now spawn in maintenance lockers
+    - type: Add
+      message: >-
+        Candy and snacks now spawn in head lockers. Will you trick or treat your
+        employees?
+    - type: Add
+      message: Added a new borg skin!
+    - type: Add
+      message: >-
+        Added the candy bucket as a selectable trinket. Are you guys going trick
+        or treating?
+    - type: Add
+      message: Added candy buckets to the autodrobe in case you lose yours.
+    - type: Add
+      message: Readded the revenant for a limited time. Ooooooo....
+    - type: Tweak
+      message: Increased the amount of basic costumes in the autodrobe
+    - type: Tweak
+      message: Very slightly increased the spawnrate of vent spiders.
+    - type: Tweak
+      message: Reduced the price of the syndicate candy bundle to 90 TC from 100 TC.
+    - type: Tweak
+      message: slightly increased the spawnrate of skeletons.
+  id: 3007
+  time: '2026-10-28T19:42:18.0000000+00:00'
+- author: Durk
+  changes:
+    - type: Add
+      message: >-
+        Trying a new font for the new lobby ui, if everyone hates it i will
+        revert it.
+    - type: Add
+      message: >-
+        added a super secret easter egg to the lobby UI, you totally wont find
+        it easily :smile:
+    - type: Tweak
+      message: >-
+        Made a lot of the UI in the character customization properly use our
+        sprites.
+  id: 3008
+  time: '2026-10-29T02:08:18.0000000+00:00'
+- author: Durk
+  changes:
+    - type: Add
+      message: Added 2000 new markings!
+    - type: Add
+      message: Added ability to view animated markings in the customization menu.
+    - type: Tweak
+      message: >-
+        Any mob with a tail that has an animated variant now automatically gets
+        the tail wag action, instead of it being set per species.
+  id: 3009
+  time: '2026-10-29T02:09:01.0000000+00:00'
+- author: Aidenkrz
+  changes:
+    - type: Add
+      message: Ported several emotes from other forks
+    - type: Remove
+      message: >-
+        Hard nerfed harpies, they can no longer use all emotes, 500 harpy mains
+        crying in chat tonight.
+    - type: Remove
+      message: >-
+        Removed the emote spam system, if u guys get too uppity and start
+        spamming them i may return it.
+    - type: Fix
+      message: Fixed juice that makes you hew not playing sounds.
+  id: 3010
+  time: '2026-10-29T17:18:09.0000000+00:00'
+- author: loksill
+  changes:
+    - type: Tweak
+      message: The Plasmaman helmet no longer requires a battery
+    - type: Tweak
+      message: >-
+        The flashlight on Plasmaman's helmet now shines in the color of
+        plasmaman
+    - type: Add
+      message: >-
+        Plasmamens now glow passively, but hardsuits and envirosuits suppress
+        this light
+  id: 3011
+  time: '2026-10-30T00:43:32.0000000+00:00'
+- author: Beanyboi69
+  changes:
+    - type: Fix
+      message: Fixed candy buckets fitting in bags.
+  id: 3012
+  time: '2026-10-30T12:48:34.0000000+00:00'
