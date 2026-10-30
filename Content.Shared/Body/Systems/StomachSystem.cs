@@ -91,7 +91,7 @@ namespace Content.Shared.Body.Systems
                     stomach.ReagentDeltas.Remove(item);
                 }
 
-                // Reserve-Station: reagents that appeared inside the stomach (e.g. reaction products)
+                // Reserve start: reagents that appeared inside the stomach (e.g. reaction products)
                 // have no delta and would never be digested, so start tracking any untracked amount.
                 foreach (var reagent in stomachSolution.Contents)
                 {
