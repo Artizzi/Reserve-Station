@@ -151,8 +151,6 @@ public sealed partial class IngestionSystem
         // Reserve edit start - put the trash into the hand that held the food, not into a free one
         string? foodHand = null;
         var pickup = user != null && _hands.IsHolding(user.Value, entity, out foodHand);
-
-        // The food is about to be deleted anyway, so free its hand first
         if (pickup && foodHand != null)
             _hands.DoDrop(user!.Value, foodHand, doDropInteraction: false, log: false);
 
