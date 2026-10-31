@@ -1,4 +1,3 @@
-# Reserve edit - base spells referenced by the upgrades below
 ent-ActionChargeSpell = Зарядка
     .desc = Это заклинание перезаряжает самые разные предметы в ваших руках — от магических артефактов до электрических компонентов. Изобретательный маг может даже передать магическую силу другому магу.
 ent-ActionForceWall = Силовая стена
