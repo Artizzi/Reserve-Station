@@ -8,7 +8,6 @@ surgery-tool-header = Этот инструмент можно использо�
 surgery-tool-unlimited = - { $tool } на [color={ $color }]{ $speed }x[/color] скорости
 surgery-tool-used = - { $tool } на [color={ $color }]{ $speed }x[/color] скорости, [color=red]затем используется[/color]
 
-# Reserve edit - surgery tool names
 surgery-tool-name-bone-gel = костный гель
 surgery-tool-name-bone-saw = пила для костей
 surgery-tool-name-bone-setter = костоправ

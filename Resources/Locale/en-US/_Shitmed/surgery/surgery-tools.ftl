@@ -16,7 +16,6 @@ surgery-tool-header = This can be used in surgeries as:
 surgery-tool-unlimited = - {$tool} at [color={$color}]{$speed}x[/color] speed
 surgery-tool-used = - {$tool} at [color={$color}]{$speed}x[/color] speed, [color=red]then gets used up[/color]
 
-# Reserve edit - surgery tool names
 surgery-tool-name-bone-gel = bone gel
 surgery-tool-name-bone-saw = a bone saw
 surgery-tool-name-bone-setter = a bone setter
